@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certified Programs & Courses</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+        
+        * {
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        body {
+            background: #0A0E1A;
+            color: #fff;
+        }
+        
+        /* Card Base Style */
+        .resource-card {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(148, 163, 184, 0.1);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            opacity: 1; 
+        }
+        
+        /* Card Hover Effect */
+        .resource-card:hover {
+            /* Aggiunge un bordo luminoso all'hover (ispirato al design ETH) */
+            border-color: #3b82f6; 
+            transform: translateY(-4px);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6), 0 0 10px rgba(59, 130, 246, 0.2);
+        }
+        
+        /* Logo Container - The main vertical area */
+        .logo-container {
+            background: rgba(15, 23, 42, 0.8);
+            border-bottom: 1px solid rgba(148, 163, 184, 0.15); 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 160px; 
+            padding: 16px; 
+            overflow: hidden; 
+        }
+        
+        /* Logo Full Size in Container */
+        .logo-container img {
+            filter: brightness(1.05) contrast(1.05);
+            width: 100%; 
+            height: 100%;
+            max-height: 120px; 
+            object-fit: contain; 
+        }
+        
+        /* Classe specifica per loghi scuri che richiedono INVERSIONE COMPLETA (es. McKinsey, Bloomberg) */
+        .logo-container .invert-dark-logo {
+            filter: invert(1) grayscale(1) brightness(1.5) contrast(1); 
+        }
+
+        /* CLASSE SPECIFICA META: Per loghi bicolore con testo scuro che deve diventare bianco. */
+        .logo-container .meta-logo-filter {
+            filter: invert(1) grayscale(1) brightness(1.75) contrast(1) hue-rotate(180deg);
+        }
+
+        /* CLASSE Y COMBINATOR: Inverte il bianco/nero e schiarisce il testo arancione. */
+        .logo-container .ycombinator-logo-filter {
+            filter: invert(0.9) hue-rotate(180deg) brightness(1.2) contrast(1.2);
+        }
+
+        /* FREE Badge - Pill shape */
+        .free-badge {
+            background: linear-gradient(135deg, #10b981, #059669);
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            font-size: 11px;
+            padding: 4px 10px;
+            border-radius: 9999px; 
+            box-shadow: 0 4px 10px rgba(16, 185, 129, 0.4); 
+            white-space: nowrap; 
+            height: fit-content; 
+        }
+
+        /* Category Tag */
+        .category-tag {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            padding: 6px 12px;
+            border-radius: 9999px;
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+            width: fit-content;
+        }
+
+        /* CTA Button - Primary Style (View Program) */
+        .cta-button-primary {
+            background: linear-gradient(135deg, #3b82f6, #6366f1);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+            font-weight: 600;
+        }
+        
+        .cta-button-primary:hover {
+            box-shadow: 0 8px 24px rgba(59, 130, 246, 0.5);
+            transform: translateY(-1px);
+        }
+
+        /* CTA Button - Secondary Style (Share) */
+        .cta-button-secondary {
+            background: transparent;
+            border: 1px solid rgba(148, 163, 184, 0.3);
+            color: #ccc;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .cta-button-secondary:hover {
+            background: rgba(148, 163, 184, 0.15);
+            border-color: rgba(148, 163, 184, 0.5);
+        }
+
+
+        /* Content Section below logo */
+        .content-section {
+            padding: 1.5rem; 
+            flex-grow: 1; 
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative; 
+        }
+
+        /* Header Gradient Title */
+        .header-gradient-text {
+            /* Text gradient */
+            background-image: linear-gradient(to right, #6366f1, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: #3b82f6; /* Fallback for browsers without clip */
+            font-weight: 900; /* Extra bold for impact */
+        }
+        /* Style for metadata (Duration) */
+        .metadata {
+            font-size: 0.8rem;
+            color: #94a3b8;
+            margin-top: 0.5rem;
+            display: flex;
+            align-items: center;
+        }
+        .metadata svg {
+            margin-right: 0.3rem;
+        }
+        
+        /* Stili aggiuntivi per l'anteprima dell'app */
+        .app-preview-container {
+            position: relative;
+            margin-bottom: 1.5rem;
+            transform: perspective(1000px) rotateX(2deg) rotateY(0deg) scale(0.98); /* Leggera prospettiva per effetto 3D */
+            transform-origin: center top;
+            transition: transform 0.3s ease;
+        }
+        .app-preview-image {
+            width: 100%;
+            height: auto;
+            border-radius: 12px;
+            border: 1px solid #3b82f640;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5), 0 0 15px #3b82f630;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="min-h-screen px-4 py-8 sm:px-6 lg:px-8">
+        
+        <!-- Header --><header class="max-w-3xl mx-auto text-center mb-12 pt-6">
+            <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold mb-4 leading-tight">
+                 <span class="header-gradient-text">Free</span> Programs
+            </h1>
+            <p class="text-base sm:text-lg text-gray-400 leading-relaxed max-w-2xl mx-auto">
+                Free programs in&nbsp;business, technology,&nbsp;and innovation from leading global brands.
+            </p>
+        </header>
+        
+        <!-- Resources List --><main class="max-w-5xl mx-auto mt-8 mb-16">
+            <div id="resources" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Cards will be inserted here --></div>
+        </main>
+
+        <!-- Sezione Altri Progetti / Footer Promozionale (AGGIORNATO con immagine di Accountra) --><div class="max-w-2xl mx-auto mb-12">
+            <div class="bg-gray-800/60 border border-indigo-600/30 rounded-2xl p-6 sm:p-8 text-center relative overflow-hidden">
+                <!-- Glow Effect --><div class="absolute inset-0 z-0 opacity-20" style="background: radial-gradient(circle at 50% 100%, #6366f140, transparent 70%);"></div>
+
+                <div class="relative z-10">
+                    <h3 class="text-xl sm:text-2xl font-bold mb-6 text-indigo-300">
+                        Discover Other Projects
+                    </h3>
+
+                    <!-- Anteprima del Dashboard Finanziario di Accountra (ORA CON LA TUA IMMAGINE) --><div class="app-preview-container">
+                        <img src="loghi/logo-accountra.png" 
+                             alt="Anteprima della web-app Accountra con grafici e dati finanziari" 
+                             class="app-preview-image"
+                             onerror="this.onerror=null; this.src='https://placehold.co/800x450/1e293b/3b82f6?text=Errore+Caricamento+Immagine';"
+                        />
+                    </div>
+                    <!-- Fine Anteprima --><p class="text-gray-400 mb-5 text-sm sm:text-base">
+                        Accountra.eu: free directory to access trustable free financial informations for several countries. 
+                    </p>
+                    <a href="https://accountra.eu" target="_blank" 
+                       class="cta-button-primary inline-flex items-center space-x-2 px-8 py-3 rounded-full text-white font-semibold text-base">
+                       <!-- Icona (simulazione di un grafico o di dati) --><svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                        </svg>
+                        <span>Go to Accountra.eu</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer --><footer class="text-center text-gray-500 text-sm pb-6">
+            <p>Curated by D10 • 2025</p>
+        </footer>
+    </div>
+
+    <script>
+        // Array di dati dei corsi AGGIORNATO (Non modificato)
+        const courses = [
+            {
+                name: "McKinsey Forward Program",
+                description: "Free 10-week global learning journey by McKinsey.org designed to build essential career skills in problem-solving, communication, adaptability, and self-leadership. Participants earn a digital McKinsey Forward badge and join a lifelong global network of professionals.",
+                link: "https://www.mckinsey.com/forward/overview",
+                logoUrl: "loghi/logo-mckinsey.svg",
+                isDarkLogo: true,
+                category: "Consulting",
+                tag: "Leadership & Career Skills",
+                duration: "10 Weeks",
+                highlights: [
+                    "Interactive self-paced courses and live webinars with McKinsey experts",
+                    "Core skills: adaptability, problem-solving, communication, and digital fluency",
+                    "Over 160,000 learners across 130+ countries",
+                    "95% of alumni report higher confidence and career growth within 3 months"
+                ]
+            },
+            {
+                name: "Y Combinator Startup School",
+                description: "Free online program by Y Combinator designed to teach how to start, build, and scale a startup. Learn directly from YC partners and founders of companies like Airbnb, Stripe, and Reddit through practical lessons on MVP design, fundraising, growth, and leadership.",
+                link: "https://www.startupschool.org/",
+                logoUrl: "loghi/unnamed.png", // Ripristinato il logo SVG per l'effetto filtro
+                isDarkLogo: false,
+                isYCombinatorLogo: false, // Attivato per mantenere l'effetto filtro
+                category: "Startup",
+                tag: "Entrepreneurship & Innovation",
+                duration: "7–10 Weeks",
+                highlights: [
+                    "Based on 15+ years of Y Combinator experience with companies like Airbnb, Coinbase, and DoorDash",
+                    "Self-paced learning with expert-led video lectures and founder case studies",
+                    "Includes YC Co-Founder Matching — the world's largest co-founder platform (100K+ matches)",
+                    "Covers MVP planning, startup funding (SAFE), user growth, and team leadership"
+                ]
+            },
+            {
+                name: "Inside LVMH Certificate Program",
+                description: "Free 30-hour online learning journey by LVMH offering an insider view of the luxury industry. Explore brand strategy, retail excellence, and sustainability through courses led by LVMH executives, industry experts, and professors. Includes an official LVMH Certificate upon completion.",
+                link: "https://www.insidelvmh.com/",
+                logoUrl: "loghi/logo-LVMH.svg",
+                isDarkLogo: true,
+                category: "Luxury/Fashion",
+                tag: "Brand Management & Strategy",
+                duration: "30 Hours (4 Modules)",
+                highlights: [
+                    "Immersive introduction to the LVMH ecosystem and its 75 Maisons",
+                    "4 modules covering fundamentals of luxury, brand strategy, innovation, and sustainability",
+                    "Delivered by LVMH leaders, industry experts, and academic partners",
+                    "Earn the Inside LVMH Certificate, obtained by over 150,000 learners worldwide"
+                ]
+            },
+            {
+                name: "Forage Virtual Job Simulations",
+                description: "Global platform offering 300+ free job simulations designed by top employers like BCG, JPMorgan, Deloitte, Red Bull, and PwC. Each simulation replicates real workplace tasks to help you explore careers, build practical skills, and earn certificates recognized by recruiters worldwide.",
+                link: "https://www.theforage.com/",
+                logoUrl: "loghi/logo-forage.png",
+                isDarkLogo: false,
+                category: "Career Development",
+                tag: "Professional Skills & Employability",
+                duration: "Self-paced (1–8 Hours per Simulation)",
+                highlights: [
+                    "Over 300 virtual job simulations across 125+ global companies",
+                    "Partners include BCG, Goldman Sachs, KPMG, Accenture, Citi, Red Bull, and Pfizer",
+                    "Develop real-world skills through hands-on business, finance, tech, and consulting projects",
+                    "Earn shareable completion certificates to strengthen your CV and LinkedIn profile",
+                    "5M+ students worldwide have used Forage to prepare for top-tier careers"
+                ]
+            },
+            {
+                name: "Google Digital Garage",
+                description: "Free online learning platform offering several courses on digital marketing, AI tools, video marketing, Google Ads, YouTube, Waze, and more. Self-paced modules include practical exercises and real-world examples, with official Google certifications upon completion.",
+                link: "https://skillshop.exceedlms.com/student/catalog/list",
+                logoUrl: "loghi/logo-google.svg",
+                isDarkLogo: false,
+                category: "Tech",
+                tag: "Digital Marketing & Digital Skills",
+                duration: "Self-paced (20 min – 6+ hours per module)",
+                highlights: [
+                    "Self-paced courses covering fundamentals and advanced digital marketing topics",
+                    "Modules on AI, data analytics, Google Ads, YouTube, Waze, and digital strategy",
+                    "Flexible, beginner-friendly, and globally accessible"
+                ]
+            },
+            {
+                name: "Meta Blueprint Certification",
+                description: "Meta Blueprint is Meta's official online learning platform offering free courses and professional certifications across Facebook, Instagram, Messenger, and WhatsApp. The program provides role-based learning paths for beginners to advanced users, preparing for globally recognized exams to validate social media marketing and digital advertising skills.",
+                link: "https://www.facebook.com/business/learn",
+                logoUrl: "loghi/logo-meta.svg", // Mantenuto il logo caricato precedentemente per Meta
+                isDarkLogo: false, 
+                isMetaLogo: true,
+                category: "Tech",
+                tag: "Social Media & Digital Advertising",
+                duration: "Self-paced (minutes to hours per module, exam-based certification)",
+                highlights: [
+                    "Official Meta training for social media marketing and digital advertising",
+                    "Role-based courses: Digital Marketing Associate, Media Buying, Media Planning, Creative Strategy, Marketing Science, Community Management, Spark AR, Marketing Developer",
+                    "Self-paced modules with practical exercises and real-world examples",
+                    "Exams online via Pearson Vue; globally recognized Meta certifications",
+                    "Courses are free, certifications require exam registration and fee",
+                    "Learning paths for small businesses, brands & agencies, career seekers, teachers, nonprofits, community leaders, and developers",
+                    "Certification validity: 12–24 months depending on the exam; renewals via exam or updates"
+                ]
+            },
+            {
+                name: "Bloomberg Market Concepts (BMC)",
+                description: "BMC is a self-paced, e-learning introduction to financial markets using Bloomberg Terminal data. Covers economic indicators, currencies, fixed income, equities, commodities, options, and portfolio management. Free on university Bloomberg terminals; otherwise, paid. Certificate available upon completion.",
+                link: "https://www.bloomberg.com/professional/products/bloomberg-terminal/education/certificate-courses/", 
+                logoUrl: "loghi/logo-bloomberg.svg", 
+                isDarkLogo: true,
+                category: "Finance",
+                tag: "Financial Markets",
+                duration: "8–12 Hours",
+                details: {
+                  keyFeatures: [
+                   "Interactive e-learning modules covering core financial markets topics",
+                   "Hands-on experience using Bloomberg Terminal functions",
+                   "Certificate of completion available (score not shown)",
+                   "Structured into 8 main modules: Economic Indicators, Currencies, Fixed Income, Equities, Terminal Basics, Commodities, Stock Options, Portfolio Management",
+                   "Free on university Bloomberg terminals; otherwise requires payment"
+                  ],
+                  targetAudience: [
+                    "Finance students",
+                    "Early career finance professionals",
+                    "Anyone seeking foundational knowledge of financial markets"
+                  ],
+                courseCost: "Free via university terminal; otherwise paid",
+                certificationCost: "Included with course completion",
+                format: "Self-paced, online e-learning with quizzes and practical exercises"
+                }
+            },
+            {
+                name: "Salesforce Trailhead",
+                description: "Trailhead is Salesforce's learning platform that lets you gain hands-on skills in CRM, Agentforce, and cloud technology. Follow interactive free courses, earn badges, level up from Champion to Legend, and prepare for optional paid Salesforce certifications.",
+                link: "https://trailhead.salesforce.com/it",
+                logoUrl: "loghi/logo-salesforce.svg",
+                isDarkLogo: false,
+                category: "Tech",
+                tag: "CRM / AI Agents",
+                duration: "Self-Paced / Free Courses",
+                details: { // Questo campo viene convertito in highlights per la visualizzazione
+                    keyFeatures: [
+                        "Hands-on learning with Salesforce products and AI agents",
+                        "Gamified paths with points, badges, and Trailblazer levels",
+                        "Content for all skill levels: beginner, intermediate, advanced",
+                        "Over 60 Salesforce certifications available (paid)",
+                        "Global Trailblazer community for support and networking"
+                    ],
+                    learningPaths: [
+                        {
+                            name: "Agentblazer Champion",
+                            description: "Explore AI fundamentals and create a simple agent for key tasks."
+                        },
+                        {
+                            name: "Agentblazer Innovator",
+                            description: "Define AI goals and customize reliable agents across your organization."
+                        },
+                        {
+                            name: "Agentblazer Legend",
+                            description: "Manage advanced agents using prompts, Data Cloud, Slack, and Agentforce development tools."
+                        }
+                    ],
+                    targetAudience: [
+                        "Salesforce professionals",
+                        "Anyone wanting to develop AI agents",
+                        "Those aiming to advance in CRM and AI careers"
+                    ],
+                    courseCost: "Free",
+                    certificationCost: "Optional, paid"
+                }
+            },
+            {
+    name: "MIT OpenCourseWare",
+    description: "MIT OpenCourseWare (OCW) offers free and open access to material from thousands of MIT courses, covering the entire MIT curriculum. Learners can explore video lectures, notes, problem sets, and interactive resources to guide self-paced learning, without enrollment, registration, or certification.",
+    link: "https://ocw.mit.edu/",
+    logoUrl: "loghi/logo-mit.svg",
+    isDarkLogo: false,
+    category: "University / Academic",
+    tag: "Open Educational Resources",
+    duration: "Self-paced / Flexible",
+    details: {
+        keyFeatures: [
+            "Access to course materials from thousands of MIT courses, covering engineering, science, management, and more",
+            "Includes video lectures, slides, assignments, exams, and interactive assessments",
+            "No enrollment or registration required; learn at your own pace",
+            "Freely downloadable, remixable, and shareable under Creative Commons license",
+            "Supports lifelong learning, teaching, and professional development"
+        ],
+        targetAudience: [
+            "Lifelong learners",
+            "Students and educators seeking free high-quality course materials",
+            "Professionals aiming to deepen knowledge in specific subjects",
+            "Anyone interested in MIT-level education without tuition or formal credit"
+        ],
+        courseCost: "Free",
+        certificationCost: "None (OCW does not provide certificates)",
+        format: "Self-paced online materials including videos, notes, problem sets, and interactive resources"
+    }
+},
+{
+    name: "IBM SkillsBuild",
+    description: "IBM SkillsBuild offers free, self-paced online courses and learning pathways in AI, data science, cloud computing, cybersecurity, and IT. Learners can gain practical skills through hands-on labs, simulations, and digital credentials to showcase their knowledge to potential employers.",
+    link: "https://skillsbuild.org/learners",
+    logoUrl: "loghi/logo-ibm.png",
+    isDarkLogo: true,
+    category: "Technology / Professional",
+    tag: "AI, Data Science, Cloud, Cybersecurity",
+    duration: "Varies by course (30 minutes – 52+ hours)",
+    details: {
+        keyFeatures: [
+            "Wide range of courses in AI, generative AI, data science, cloud computing, and cybersecurity",
+            "Hands-on labs and simulations for practical experience",
+            "Digital badges and credentials to demonstrate skills to employers",
+            "Self-paced and free, with no enrollment barriers",
+            "Supports high school students, college students, and adult learners"
+        ],
+        targetAudience: [
+            "High school and college students exploring technology careers",
+            "Professionals seeking upskilling in AI, cloud, data science, and cybersecurity",
+            "Lifelong learners wanting practical, employer-recognized credentials",
+            "Educators looking for teaching resources and labs"
+        ],
+        courseCost: "Free",
+        certificationCost: "Free digital badges available for eligible courses",
+        format: "Self-paced online courses, hands-on labs, simulations, and learning pathways"
+    }
+}
+        ];
+
+        function createCard(course) {
+            // Seleziona la classe CSS in base ai flag
+            let logoClass = '';
+            if (course.isDarkLogo) {
+                logoClass = 'invert-dark-logo';
+            } else if (course.isMetaLogo) { 
+                 logoClass = 'meta-logo-filter';
+            } else if (course.isYCombinatorLogo) { 
+                 logoClass = 'ycombinator-logo-filter';
+            }
+            
+            // Gestisce gli highlights, supportando sia l'array diretto 'highlights' che 'details.keyFeatures'
+            let cardHighlights = course.highlights || (course.details && course.details.keyFeatures) || [];
+
+            // Icona SVG per la durata
+            const durationIcon = `
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+            `;
+
+            
+            return `
+                <div class="resource-card rounded-2xl overflow-hidden relative shadow-lg">
+                    
+                    <!-- Logo Section --><div class="logo-container">
+                        <img src="${course.logoUrl}" onerror="this.onerror=null; this.src='https://placehold.co/120x80/1e293b/94a3b8?text=${course.name.substring(0, 1) + course.name.split(' ').slice(-1)[0].substring(0, 1)}';" alt="${course.name}" class="${logoClass}">
+                    </div>
+                    
+                    <!-- Content Section --><div class="content-section">
+                        
+                        <!-- Top Content (Category, Title, Badge, Description) --><div class="mb-4">
+                            <!-- Category Tag --><span class="category-tag">${course.category}</span>
+
+                            <!-- Title and Badge --><div class="flex items-start justify-between mt-1 mb-2">
+                                <h3 class="text-xl font-bold text-white leading-snug pr-2">
+                                    ${course.name}
+                                </h3>
+                                <!-- FREE Badge (Assumiamo che siano tutti gratuiti o abbiano corsi base gratuiti) --><span class="free-badge flex-shrink-0 mt-1">FREE</span>
+                            </div>
+                            
+                            <!-- Metadata (Duration) --><div class="metadata">
+                                ${durationIcon}
+                                <span>Duration: ${course.duration}</span>
+                            </div>
+                            
+                            <!-- Description --><p class="text-sm text-gray-400 leading-relaxed mt-3 mb-4">
+                                ${course.description}
+                            </p>
+                             
+                            <!-- Tag --><span class="inline-block bg-gray-700/50 text-gray-300 text-xs px-3 py-1 rounded-full font-medium mt-2">
+                                ${course.tag}
+                            </span>
+                        </div>
+                        
+                        <!-- Highlights Section (Optional) -->${cardHighlights.length > 0 ? `
+                            <div class="mt-4 mb-4">
+                                <ul class="space-y-1 text-sm text-gray-400 list-none p-0 m-0">
+                                    ${cardHighlights.map(h => `
+                                        <li class="flex items-start">
+                                            <svg class="w-4 h-4 text-blue-400 flex-shrink-0 mt-1 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                            <span class="text-xs sm:text-sm leading-relaxed">${h}</span>
+                                        </li>
+                                    `).join('')}
+                                </ul>
+                            </div>
+                        ` : ''}
+
+                        <!-- Buttons Section --><div class="mt-auto flex space-x-3 pt-4">
+                            <!-- Primary CTA Button (View Program) --><a href="${course.link}" target="_blank" 
+                               class="cta-button-primary flex-1 inline-flex items-center justify-center px-4 py-3 rounded-lg text-white text-sm">
+                                View Program
+                            </a>
+                            
+                            <!-- Secondary CTA Button (Share) --><button onclick="shareProgram('${course.name}', '${course.link}')"
+                                    class="cta-button-secondary inline-flex items-center justify-center px-4 py-3 rounded-lg text-white text-sm transition-all w-24 flex-shrink-0">
+                                Share
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        /**
+         * Gestisce la condivisione del programma.
+         * Tenta di utilizzare l'API Web Share nativa. Se non disponibile, copia il link.
+         */
+        async function shareProgram(name, link) {
+            const shareData = {
+                title: name,
+                text: `Dai un'occhiata a questo programma di certificazione: ${name}`,
+                url: link,
+            };
+
+            try {
+                if (navigator.share) {
+                    await navigator.share(shareData);
+                } else {
+                    // Fallback: copia negli appunti se l'API Share non è disponibile
+                    copyToClipboard(link, name);
+                }
+            } catch (error) {
+                // Se la condivisione fallisce (es. utente annulla), copia il link
+                if (error.name !== 'AbortError') {
+                    copyToClipboard(link, name);
+                }
+            }
+        }
+        
+        /**
+         * Funzione di utility per copiare negli appunti (utilizzata come fallback).
+         */
+        function copyToClipboard(link, name) {
+             // Usa document.execCommand('copy') per compatibilità con l'iframe
+            const tempInput = document.createElement('input');
+            tempInput.value = link;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+
+            // Visualizza un messaggio di successo (sostituisce alert)
+            showToast(`Link a "${name}" copiato negli appunti!`, 'success');
+        }
+
+
+        function showToast(message, type) {
+            const container = document.body;
+            
+            // Rimuove i toast precedenti
+            document.querySelectorAll('.toast-message').forEach(t => t.remove());
+
+            const toast = document.createElement('div');
+            toast.className = 'toast-message fixed bottom-4 right-4 z-50 px-4 py-3 rounded-lg shadow-xl text-white transition-opacity duration-300';
+            toast.textContent = message;
+
+            if (type === 'success') {
+                toast.style.backgroundColor = '#10b981'; /* Green */
+            } else {
+                toast.style.backgroundColor = '#ef4444'; /* Red */
+            }
+            // Imposta l'opacità iniziale a 0 per la transizione
+            toast.style.opacity = '0';
+            container.appendChild(toast);
+
+            // Forza il reflow per la transizione
+            void toast.offsetWidth; 
+            toast.style.opacity = '1';
+
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        function renderCourses() {
+            const container = document.getElementById('resources');
+            
+            if (courses.length === 0) {
+                 container.innerHTML = '<p class="text-center text-gray-500 col-span-full py-10">No resources found yet. Check back soon!</p>';
+                 return;
+            }
+
+            container.innerHTML = courses.map(course => createCard(course)).join('');
+        }
+
+        document.addEventListener('DOMContentLoaded', renderCourses);
+    </script>
+</body>
+</html>
