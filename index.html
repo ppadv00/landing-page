@@ -50,8 +50,7 @@
     }
     </script>
 
-    
-    <!-- Fonts and Tailwind CSS -->
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
     <style>
@@ -67,9 +66,9 @@
             color: #fff;
         }
         
-        /* --- HERO SECTION STYLES (Focus Responsiveness) --- */
+        /* Hero Section */
         .hero-section {
-            padding-top: 4rem; /* Base padding for mobile */
+            padding-top: 4rem;
             padding-bottom: 3rem;
             text-align: left; 
             max-width: 1400px;
@@ -81,41 +80,41 @@
         
         @media (min-width: 640px) {
             .hero-section {
-                padding-top: 6rem; /* Increase padding on larger screens */
+                padding-top: 6rem;
                 padding-left: 2rem;
                 padding-right: 2rem;
             }
         }
 
         .hero-eyebrow {
-            font-size: 0.8rem; /* sm */
+            font-size: 0.8rem;
             font-weight: 500;
             color: #ccc; 
             letter-spacing: 0.05em;
             text-transform: uppercase;
-            margin-bottom: 1rem; /* Adjusted for mobile */
+            margin-bottom: 1rem;
         }
         
         .hero-title {
-            font-size: 2.5rem; /* Large size for mobile */
+            font-size: 2.5rem;
             line-height: 1.1;
             font-weight: 800;
             color: #fff;
             margin-bottom: 1.5rem;
-            max-width: 500px; /* Good for line length on mobile/tablet */
+            max-width: 500px;
         }
         
         @media (min-width: 640px) {
             .hero-title {
-                font-size: 4rem; /* Tablet/Desktop size */
+                font-size: 4rem;
             }
         }
         
         @media (min-width: 1024px) {
             .hero-title {
-                font-size: 5.5rem; /* Desktop size as per image */
+                font-size: 5.5rem;
                 line-height: 1; 
-                max-width: 800px; /* Allow more width for the large title */
+                max-width: 800px;
             }
         }
         
@@ -124,23 +123,22 @@
         }
         
         .hero-description {
-            font-size: 1rem; /* Base size for mobile */
+            font-size: 1rem;
             color: #a1a1aa; 
-            max-width: 350px; /* Good reading width */
+            max-width: 350px;
             margin-bottom: 2rem;
         }
 
         @media (min-width: 640px) {
             .hero-description {
-                font-size: 1.125rem; /* Larger on desktop */
+                font-size: 1.125rem;
             }
         }
 
-        /* Bottone CTA */
         .cta-button {
             background: #fff;
             color: #000;
-            padding: 1rem 2rem; /* slightly less padding on mobile */
+            padding: 1rem 2rem;
             border-radius: 0.75rem; 
             font-weight: 600;
             display: inline-flex;
@@ -155,7 +153,7 @@
         
         @media (min-width: 640px) {
             .cta-button {
-                padding: 1.25rem 2.5rem; /* More generous padding on desktop */
+                padding: 1.25rem 2.5rem;
                 font-size: 1.125rem;
             }
         }
@@ -165,25 +163,104 @@
             transform: translateY(-2px);
             background: #f0f0f0;
         }
+        
         .cta-button svg {
             color: #000;
         }
 
-        /* --- CARD & OTHER STYLES (Mantenuti per coerenza) --- */
-        .resource-card {
-            background: rgba(15, 23, 42, 0.6);
-            border: 1px solid rgba(148, 163, 184, 0.1);
+        /* Stats Section */
+        .stats-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 0 1rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease;
+        }
+        
+        .stats-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #3b82f6;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            font-size: 0.875rem;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Filter Section */
+        .filter-section {
+            max-width: 1200px;
+            margin: 3rem auto 2rem;
+            padding: 0 1rem;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+        
+        .filter-btn {
+            padding: 0.625rem 1.5rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #94a3b8;
+            cursor: pointer;
             transition: all 0.3s ease;
+        }
+        
+        .filter-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .filter-btn.active {
+            background: #3b82f6;
+            border-color: #3b82f6;
+            color: #fff;
+        }
+
+        /* Cards */
+        .resource-card {
+            background: rgba(15, 23, 42, 0.4);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
             display: flex;
             flex-direction: column;
             position: relative;
-            opacity: 1; 
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        .resource-card.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
         
         .resource-card:hover {
             border-color: #3b82f6; 
-            transform: translateY(-4px);
-            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6), 0 0 10px rgba(59, 130, 246, 0.2);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 15px rgba(59, 130, 246, 0.3);
         }
         
         .logo-container {
@@ -202,7 +279,12 @@
             width: 100%; 
             height: 100%;
             max-height: 120px; 
-            object-fit: contain; 
+            object-fit: contain;
+            transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        
+        .resource-card:hover .logo-container img {
+            transform: scale(1.08) translateY(-5px);
         }
         
         .logo-container .invert-dark-logo {
@@ -211,10 +293,6 @@
 
         .logo-container .meta-logo-filter {
             filter: invert(1) grayscale(1) brightness(1.75) contrast(1) hue-rotate(180deg);
-        }
-
-        .logo-container .ycombinator-logo-filter {
-            filter: invert(0.9) hue-rotate(180deg) brightness(1.2) contrast(1.2);
         }
 
         .free-badge {
@@ -267,7 +345,6 @@
             border-color: rgba(148, 163, 184, 0.5);
         }
 
-
         .content-section {
             padding: 1.5rem; 
             flex-grow: 1; 
@@ -284,23 +361,79 @@
             display: flex;
             align-items: center;
         }
+        
         .metadata svg {
             margin-right: 0.3rem;
         }
+
+        /* Content Section */
+        .content-intro {
+            max-width: 1200px;
+            margin: 5rem auto 4rem;
+            padding: 0 1rem;
+        }
         
-        /* --- PROMO SECTION STYLES (Aggiornato) --- */
+        .content-intro h2 {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            color: #fff;
+        }
+        
+        .content-intro p {
+            font-size: 1.125rem;
+            line-height: 1.8;
+            color: #94a3b8;
+            margin-bottom: 1rem;
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            max-width: 900px;
+            margin: 5rem auto;
+            padding: 0 1rem;
+        }
+        
+        .faq-section h2 {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 2rem;
+            text-align: center;
+            color: #fff;
+        }
+        
+        .faq-item {
+            margin-bottom: 1.5rem;
+            background: rgba(15, 23, 42, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            padding: 1.5rem;
+        }
+        
+        .faq-question {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 0.75rem;
+        }
+        
+        .faq-answer {
+            font-size: 1rem;
+            color: #94a3b8;
+            line-height: 1.7;
+        }
+
+        /* Promo Section */
         .promo-section {
-            background: #0f172a; /* Colore più scuro */
+            background: #0f172a;
             border: 1px solid #1e293b; 
-            padding: 2.5rem 1.5rem; /* Padding responsive */
-            border-radius: 1.5rem; /* Angoli più arrotondati */
+            padding: 2.5rem 1.5rem;
+            border-radius: 1.5rem;
             text-align: center;
             margin-top: 5rem;
-            /* Aggiunge un bordo luminoso e una scatola d'ombra profonda */
             box-shadow: 0 0 50px rgba(0, 0, 0, 0.9), inset 0 0 0 1px rgba(59, 130, 246, 0.1); 
             position: relative;
             overflow: hidden;
-            /* Aggiunge una leggera sfocatura di colore in alto */
             z-index: 10;
         }
 
@@ -319,58 +452,62 @@
         .promo-eyebrow {
             font-size: 0.75rem;
             font-weight: 700;
-            color: #64748b; /* Grigio più morbido */
+            color: #64748b;
             text-transform: uppercase;
             letter-spacing: 0.1em;
             margin-bottom: 0.75rem;
         }
+        
         .promo-title {
-            font-size: 2.25rem; /* Leggermente più grande */
+            font-size: 2.25rem;
             font-weight: 900;
             color: #fff;
             margin-bottom: 0.5rem;
         }
+        
         @media (max-width: 640px) {
             .promo-title {
                 font-size: 1.75rem;
             }
         }
+        
         .promo-title strong {
             background-image: linear-gradient(to right, #6366f1, #3b82f6);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             color: #3b82f6;
         }
+        
         .promo-description {
             font-size: 1rem;
             color: #a1a1aa;
             max-width: 450px;
             margin: 0.5rem auto 2rem;
         }
+        
         .promo-image {
             margin: 2.5rem auto 3rem;
             max-width: 500px;
             border-radius: 0.75rem;
             overflow: hidden;
-            /* Contenitore con ombra interna per l'effetto "schermo" */
             padding: 1rem;
             background: #000;
             box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.8), 0 15px 30px rgba(0, 0, 0, 0.5);
             border: 1px solid #1e293b;
         }
+        
         .promo-image img {
             width: 100%;
             height: auto;
             display: block;
             border-radius: 0.5rem;
         }
-        
     </style>
 </head>
 <body>
     <div class="min-h-screen">
         
-        <!-- HERO SECTION: Replicates the requested style -->
+        <!-- HERO SECTION -->
         <section class="hero-section mx-auto">
             <div class="max-w-7xl">
                 <div class="hero-eyebrow">CURATED LEARNING COLLECTION</div>
@@ -391,7 +528,48 @@
                 </button>
             </div>
         </section>
+
+        <!-- STATS SECTION -->
+        <section class="stats-section" id="stats">
+            <div class="stat-item">
+                <span class="stat-number" data-target="10">0</span>
+                <span class="stat-label">Elite Programs</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number" data-target="300">0</span>
+                <span class="stat-label">Learning Hours</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">100%</span>
+                <span class="stat-label">Free Access</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number" data-target="150">0</span>
+                <span class="stat-label">Global Instructors</span>
+            </div>
+        </section>
+
+        <!-- CONTENT INTRO -->
+        <section class="content-intro">
+            <h2>Professional Development at Scale</h2>
+            <p>
+                Access industry-leading educational content from McKinsey & Company, MIT, Google, Meta, IBM, and other global institutions. Each program offers structured learning paths, hands-on exercises, and recognized certificates that validate your expertise.
+            </p>
+            <p>
+                These programs span consulting, technology, finance, luxury management, and entrepreneurship—designed for professionals seeking to advance their careers through continuous learning and skill development.
+            </p>
+        </section>
         
+        <!-- FILTER SECTION -->
+        <div class="filter-section">
+            <button class="filter-btn active" data-filter="all">All Programs</button>
+            <button class="filter-btn" data-filter="Consulting">Consulting</button>
+            <button class="filter-btn" data-filter="Tech">Technology</button>
+            <button class="filter-btn" data-filter="Finance">Finance</button>
+            <button class="filter-btn" data-filter="Startup">Startup</button>
+            <button class="filter-btn" data-filter="Luxury/Fashion">Luxury</button>
+        </div>
+
         <!-- MAIN CONTENT - Cards Grid -->
         <main class="max-w-5xl mx-auto mt-8 mb-16 px-4 sm:px-0">
             <div id="resources" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -399,36 +577,66 @@
             </div>
         </main>
 
+        <!-- FAQ SECTION -->
+        <section class="faq-section">
+            <h2>Frequently Asked Questions</h2>
+            
+            <div class="faq-item">
+                <div class="faq-question">Are these programs truly free?</div>
+                <div class="faq-answer">
+                    Yes. All programs listed provide free access to core learning materials. Some may offer optional paid certifications or premium features, which are clearly indicated in each program description.
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">Do I receive a certificate upon completion?</div>
+                <div class="faq-answer">
+                    Most programs offer digital certificates or badges upon successful completion. Certificate requirements vary by program—some are automatic, while others require passing assessments or completing specific milestones.
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">What is the time commitment required?</div>
+                <div class="faq-answer">
+                    Programs range from self-paced modules taking a few hours to structured courses spanning several weeks. Each program listing includes estimated duration to help you plan accordingly.
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">Can I access these programs from any country?</div>
+                <div class="faq-answer">
+                    Most programs are globally accessible. However, some may have regional restrictions or language availability limitations. Check individual program details for specific requirements.
+                </div>
+            </div>
+        </section>
+
         <!-- RELATED PROJECT PROMO -->
         <div class="max-w-2xl mx-auto mb-12 px-4 sm:px-0">
             <section class="max-w-4xl mx-auto">
-            <div class="promo-section">
-                <div class="promo-eyebrow">RELATED PROJECT</div>
-                
-                <h3 class="promo-title">Introducing <strong>Accountra</strong></h3>
-                <p class="promo-description">
-                    A comprehensive directory of financial information resources across multiple jurisdictions.
-                </p>
-                
-                <div class="promo-image">
+                <div class="promo-section">
+                    <div class="promo-eyebrow">RELATED PROJECT</div>
                     
-                    <img src="loghi/logo-accountra.png" 
-                         alt="Interfaccia di Accountra che mostra dati finanziari e una dashboard." 
-                         onerror="this.onerror=null; this.src='https://placehold.co/800x450/0f172a/ffffff?text=Accountra+Data';">
-                    <!-- Aggiunta meta tag per l'immagine nel blocco di codice per coerenza visiva -->
-                    <meta property="og:image" content="https://placehold.co/800x450/0f172a/ffffff?text=Accountra">
-                    <meta property="og:image:type" content="image/png">
+                    <h3 class="promo-title">Introducing <strong>Accountra</strong></h3>
+                    <p class="promo-description">
+                        A comprehensive directory of financial information resources across multiple jurisdictions.
+                    </p>
+                    
+                    <div class="promo-image">
+                        <img src="loghi/logo-accountra.png" 
+                             alt="Accountra platform interface" 
+                             onerror="this.onerror=null; this.src='https://placehold.co/800x450/0f172a/ffffff?text=Accountra';">
+                    </div>
+                    
+                    <a href="https://accountra.eu" target="_blank" 
+                       class="cta-button-primary inline-flex items-center justify-center px-8 py-4 rounded-xl text-white text-base">
+                        <span>Visit Accountra</span>
+                        <svg class="w-5 h-5 ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                        </svg>
+                    </a>
                 </div>
-                
-                <a href="https://accountra.eu" target="_blank" 
-                   class="cta-button-primary inline-flex items-center justify-center px-8 py-4 rounded-xl text-white text-base">
-                    <span>Visit Accountra</span>
-                    <svg class="w-5 h-5 ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                    </svg>
-                </a>
-            </div>
-        </section>
+            </section>
+        </div>
 
         <!-- FOOTER -->
         <footer class="text-center text-gray-500 text-sm py-6">
@@ -438,7 +646,6 @@
 
     <!-- JavaScript logic -->
     <script>
-        // Array di dati dei corsi (Omesso per brevità in questa spiegazione, ma completo nel file)
         const courses = [
             {
                 name: "McKinsey Forward Program",
@@ -462,7 +669,6 @@
                 link: "https://www.startupschool.org/",
                 logoUrl: "loghi/unnamed.png", 
                 isDarkLogo: false,
-                isYCombinatorLogo: false,
                 category: "Startup",
                 tag: "Entrepreneurship & Innovation",
                 duration: "7–10 Weeks",
@@ -533,12 +739,9 @@
                 duration: "Self-paced (minutes to hours per module, exam-based certification)",
                 highlights: [
                     "Official Meta training for social media marketing and digital advertising",
-                    "Role-based courses: Digital Marketing Associate, Media Buying, Media Planning, Creative Strategy, Marketing Science, Community Management, Spark AR, Marketing Developer",
+                    "Role-based courses: Digital Marketing Associate, Media Buying, Media Planning, Creative Strategy",
                     "Self-paced modules with practical exercises and real-world examples",
-                    "Exams online via Pearson Vue; globally recognized Meta certifications",
-                    "Courses are free, certifications require exam registration and fee",
-                    "Learning paths for small businesses, brands & agencies, career seekers, teachers, nonprofits, community leaders, and developers",
-                    "Certification validity: 12–24 months depending on the exam; renewals via exam or updates",
+                    "Globally recognized Meta certifications available through Pearson Vue exams"
                 ]
             },
             {
@@ -550,23 +753,12 @@
                 category: "Finance",
                 tag: "Financial Markets",
                 duration: "8–12 Hours",
-                details: {
-                  keyFeatures: [
-                   "Interactive e-learning modules covering core financial markets topics",
-                   "Hands-on experience using Bloomberg Terminal functions",
-                   "Certificate of completion available (score not shown)",
-                   "Structured into 8 main modules: Economic Indicators, Currencies, Fixed Income, Equities, Terminal Basics, Commodities, Stock Options, Portfolio Management",
-                   "Free on university terminal; otherwise paid"
-                  ],
-                  targetAudience: [
-                    "Finance students",
-                    "Early career finance professionals",
-                    "Anyone seeking foundational knowledge of financial markets"
-                  ],
-                courseCost: "Free via university terminal; otherwise paid",
-                certificationCost: "Included with course completion",
-                format: "Self-paced, online e-learning with quizzes and practical exercises"
-                }
+                highlights: [
+                    "Interactive e-learning modules covering core financial markets topics",
+                    "Hands-on experience using Bloomberg Terminal functions",
+                    "Certificate of completion available",
+                    "Structured into 8 main modules: Economic Indicators, Currencies, Fixed Income, Equities, Terminal Basics, Commodities, Stock Options, Portfolio Management"
+                ]
             },
             {
                 name: "Salesforce Trailhead",
@@ -577,127 +769,77 @@
                 category: "Tech",
                 tag: "CRM / AI Agents",
                 duration: "Self-Paced / Free Courses",
-                details: { 
-                    keyFeatures: [
-                        "Hands-on learning with Salesforce products and AI agents",
-                        "Gamified paths with points, badges, and Trailblazer levels",
-                        "Content for all skill levels: beginner, intermediate, advanced",
-                        "Over 60 Salesforce certifications available (paid)",
-                        "Global Trailblazer community for support and networking"
-                    ],
-                    learningPaths: [
-                        {
-                            name: "Agentblazer Champion",
-                            description: "Explore AI fundamentals and create a simple agent for key tasks."
-                        },
-                        {
-                            name: "Agentblazer Innovator",
-                            description: "Define AI goals and customize reliable agents across your organization."
-                        },
-                        {
-                            name: "Agentblazer Legend",
-                            description: "Manage advanced agents using prompts, Data Cloud, Slack, and Agentforce development tools."
-                        }
-                    ],
-                    targetAudience: [
-                        "Salesforce professionals",
-                        "Anyone wanting to develop AI agents",
-                        "Those aiming to advance in CRM and AI careers"
-                    ],
-                    courseCost: "Free",
-                    certificationCost: "Optional, paid"
-                }
+                highlights: [
+                    "Hands-on learning with Salesforce products and AI agents",
+                    "Gamified paths with points, badges, and Trailblazer levels",
+                    "Content for all skill levels: beginner, intermediate, advanced",
+                    "Over 60 Salesforce certifications available (paid)"
+                ]
             },
             {
-    name: "MIT OpenCourseWare",
-    description: "MIT OpenCourseWare (OCW) offers free and open access to material from thousands of MIT courses, covering the entire MIT curriculum. Learners can explore video lectures, notes, problem sets, and interactive resources to guide self-paced learning, without enrollment, registration, or certification.",
-    link: "https://ocw.mit.edu/",
-    logoUrl: "loghi/logo-mit.svg",
-    isDarkLogo: false,
-    category: "University / Academic",
-    tag: "Open Educational Resources",
-    duration: "Self-paced / Flexible",
-    details: {
-        keyFeatures: [
-            "Access to course materials from thousands of MIT courses, covering engineering, science, management, and more",
-            "Includes video lectures, slides, assignments, exams, and interactive assessments",
-            "No enrollment or registration required; learn at your own pace",
-            "Freely downloadable, remixable, and shareable under Creative Commons license",
-            "Supports lifelong learning, teaching, and professional development"
-        ],
-        targetAudience: [
-            "Lifelong learners",
-            "Students and educators seeking free high-quality course materials",
-            "Professionals aiming to deepen knowledge in specific subjects",
-            "Anyone interested in MIT-level education without tuition or formal credit"
-        ],
-        courseCost: "Free",
-        certificationCost: "None (OCW does not provide certificates)",
-        format: "Self-paced online materials including videos, notes, problem sets, and interactive resources"
-    }
-},
-{
-    name: "IBM SkillsBuild",
-    description: "IBM SkillsBuild offers free, self-paced online courses and learning pathways in AI, data science, cloud computing, cybersecurity, and IT. Learners can gain practical skills through hands-on labs, simulations, and digital credentials to showcase their knowledge to potential employers.",
-    link: "https://skillsbuild.org/learners",
-    logoUrl: "loghi/logo-ibm.png",
-    isDarkLogo: true,
-    category: "Technology / Professional",
-    tag: "AI, Data Science, Cloud, Cybersecurity",
-    duration: "Varies by course (30 minutes – 52+ hours)",
-    details: {
-        keyFeatures: [
-            "Wide range of courses in AI, generative AI, data science, cloud computing, and cybersecurity",
-            "Hands-on labs and simulations for practical experience",
-            "Digital badges and credentials to demonstrate skills to employers",
-            "Self-paced and free, with no enrollment barriers",
-            "Supports high school students, college students, and adult learners"
-        ],
-        targetAudience: [
-            "High school and college students exploring technology careers",
-            "Professionals seeking upskilling in AI, cloud, data science, and cybersecurity",
-            "Lifelong learners wanting practical, employer-recognized credentials",
-            "Educators looking for teaching resources and labs"
-        ],
-        courseCost: "Free",
-        certificationCost: "Free digital badges available for eligible courses",
-        format: "Self-paced online courses, hands-on labs, simulations, and learning pathways"
-    }
-}
+                name: "MIT OpenCourseWare",
+                description: "MIT OpenCourseWare (OCW) offers free and open access to material from thousands of MIT courses, covering the entire MIT curriculum. Learners can explore video lectures, notes, problem sets, and interactive resources to guide self-paced learning, without enrollment, registration, or certification.",
+                link: "https://ocw.mit.edu/",
+                logoUrl: "loghi/logo-mit.svg",
+                isDarkLogo: false,
+                category: "University / Academic",
+                tag: "Open Educational Resources",
+                duration: "Self-paced / Flexible",
+                highlights: [
+                    "Access to course materials from thousands of MIT courses",
+                    "Includes video lectures, slides, assignments, exams, and interactive assessments",
+                    "No enrollment or registration required; learn at your own pace",
+                    "Freely downloadable, remixable, and shareable under Creative Commons license"
+                ]
+            },
+            {
+                name: "IBM SkillsBuild",
+                description: "IBM SkillsBuild offers free, self-paced online courses and learning pathways in AI, data science, cloud computing, cybersecurity, and IT. Learners can gain practical skills through hands-on labs, simulations, and digital credentials to showcase their knowledge to potential employers.",
+                link: "https://skillsbuild.org/learners",
+                logoUrl: "loghi/logo-ibm.png",
+                isDarkLogo: true,
+                category: "Technology / Professional",
+                tag: "AI, Data Science, Cloud, Cybersecurity",
+                duration: "Varies by course (30 minutes – 52+ hours)",
+                highlights: [
+                    "Wide range of courses in AI, generative AI, data science, cloud computing, and cybersecurity",
+                    "Hands-on labs and simulations for practical experience",
+                    "Digital badges and credentials to demonstrate skills to employers",
+                    "Self-paced and free, with no enrollment barriers"
+                ]
+            }
         ];
+
+        let currentFilter = 'all';
 
         function scrollToPrograms() {
             const resourcesSection = document.getElementById('resources');
             if (resourcesSection) {
-                resourcesSection.scrollIntoView({ behavior: 'smooth' });
+                resourcesSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
         }
-
 
         function createCard(course) {
             let logoClass = '';
             if (course.isDarkLogo) {
                 logoClass = 'invert-dark-logo';
             } else if (course.isMetaLogo) { 
-                 logoClass = 'meta-logo-filter';
-            } else if (course.isYCombinatorLogo) { 
-                 logoClass = 'ycombinator-logo-filter';
+                logoClass = 'meta-logo-filter';
             }
             
-            let cardHighlights = course.highlights || (course.details && course.details.keyFeatures) || [];
+            let cardHighlights = course.highlights || [];
 
             const durationIcon = `
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
             `;
-
             
             return `
-                <div class="resource-card rounded-2xl overflow-hidden relative shadow-lg">
+                <div class="resource-card rounded-2xl overflow-hidden relative shadow-lg" data-category="${course.category}">
                     
                     <div class="logo-container">
-                        <img src="${course.logoUrl}" onerror="this.onerror=null; this.src='https://placehold.co/120x80/1e293b/94a3b8?text=${course.name.substring(0, 1) + course.name.split(' ').slice(-1)[0].substring(0, 1)}';" alt="${course.name}" class="${logoClass}">
+                        <img src="${course.logoUrl}" onerror="this.onerror=null; this.src='https://placehold.co/120x80/1e293b/94a3b8?text=${course.name.substring(0, 1)}';" alt="${course.name}" class="${logoClass}" loading="lazy">
                     </div>
                     
                     <div class="content-section">
@@ -758,7 +900,7 @@
         async function shareProgram(name, link) {
             const shareData = {
                 title: name,
-                text: `Dai un'occhiata a questo programma di certificazione: ${name}`,
+                text: `Check out this certification program: ${name}`,
                 url: link,
             };
 
@@ -782,9 +924,8 @@
             tempInput.select();
             document.execCommand('copy');
             document.body.removeChild(tempInput);
-            showToast(`Link a "${name}" copiato negli appunti!`, 'success');
+            showToast(`Link to "${name}" copied to clipboard!`, 'success');
         }
-
 
         function showToast(message, type) {
             const container = document.body;
@@ -811,18 +952,107 @@
             }, 3000);
         }
 
+        function filterCourses(category) {
+            currentFilter = category;
+            const cards = document.querySelectorAll('.resource-card');
+            
+            cards.forEach((card, index) => {
+                const cardCategory = card.dataset.category;
+                
+                if (category === 'all' || cardCategory === category) {
+                    setTimeout(() => {
+                        card.style.display = 'flex';
+                        setTimeout(() => {
+                            card.classList.add('visible');
+                        }, 50);
+                    }, index * 50);
+                } else {
+                    card.classList.remove('visible');
+                    setTimeout(() => {
+                        card.style.display = 'none';
+                    }, 300);
+                }
+            });
+        }
+
         function renderCourses() {
             const container = document.getElementById('resources');
             
             if (courses.length === 0) {
-                 container.innerHTML = '<p class="text-center text-gray-500 col-span-full py-10">No resources found yet. Check back soon!</p>';
-                 return;
+                container.innerHTML = '<p class="text-center text-gray-500 col-span-full py-10">No resources found yet. Check back soon!</p>';
+                return;
             }
 
             container.innerHTML = courses.map(course => createCard(course)).join('');
+            
+            setTimeout(() => {
+                const cards = document.querySelectorAll('.resource-card');
+                cards.forEach((card, index) => {
+                    setTimeout(() => {
+                        card.classList.add('visible');
+                    }, index * 100);
+                });
+            }, 100);
         }
 
-        document.addEventListener('DOMContentLoaded', renderCourses);
+        function animateCounter(element) {
+            const target = parseInt(element.dataset.target);
+            if (!target) return;
+            
+            const duration = 2000;
+            const increment = target / (duration / 16);
+            let current = 0;
+            
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    element.textContent = target + '+';
+                    clearInterval(timer);
+                } else {
+                    element.textContent = Math.floor(current) + '+';
+                }
+            }, 16);
+        }
+
+        function setupIntersectionObserver() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        
+                        if (entry.target.id === 'stats') {
+                            const counters = entry.target.querySelectorAll('[data-target]');
+                            counters.forEach(counter => animateCounter(counter));
+                        }
+                        
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            const statsSection = document.getElementById('stats');
+            if (statsSection) observer.observe(statsSection);
+        }
+
+        function setupFilterButtons() {
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            
+            filterButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    filterButtons.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    
+                    const category = btn.dataset.filter;
+                    filterCourses(category);
+                });
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderCourses();
+            setupIntersectionObserver();
+            setupFilterButtons();
+        });
     </script>
 </body>
 </html>
